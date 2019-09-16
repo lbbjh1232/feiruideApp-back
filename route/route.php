@@ -76,6 +76,7 @@ Route::rule('/drug/proNetDrug','api/shortage.Index/proNetDrug');
 Route::rule('/drug/reSubmit','api/shortage.Index/reSubmit');
 Route::rule('/drug/checkProvide','api/shortage.Index/checkProvide');
 Route::rule('/drug/isProvide','api/shortage.Index/isProvide');
+Route::rule('/drug/proSubmit','api/shortage.Index/proSubmit');
 
 
 

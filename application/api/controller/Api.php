@@ -5,6 +5,7 @@ use think\Controller;
 use think\Request;
 use app\api\controller\Send;
 use app\api\controller\Oauth;
+use Zhenggg\Huyi\EasyHuyi; 
 
 /**
  * api 入口文件基类，需要控制权限的控制器都应该继承该类
@@ -53,6 +54,18 @@ class Api
 		}
 
 	}
+
+	 // 短信发送
+    public function sms($content,$mobile)
+    {
+        $config = [
+            'APIID' => 'C38084286',
+            'APIKEY' => '43dac5467cf5fac78a6908e828944b5f',
+        ];
+        //发送短信验证码/通知
+        $huyi = new EasyHuyi( $config );
+        $getSms = $huyi->sms()->content($content)->send($mobile);
+    }
 
 	/**
 	 * 空方法
