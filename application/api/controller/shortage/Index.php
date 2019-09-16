@@ -127,7 +127,7 @@ class Index extends Api
 	}
 
 	// 查询是否提供药品
-	public function provide()
+	public function isProvide()
 	{
 		$params = input('');
 		$condition['shortage_id'] = $params['sid'];
