@@ -77,6 +77,9 @@ Route::rule('/drug/reSubmit','api/shortage.Index/reSubmit');
 Route::rule('/drug/checkProvide','api/shortage.Index/checkProvide');
 Route::rule('/drug/isProvide','api/shortage.Index/isProvide');
 Route::rule('/drug/proSubmit','api/shortage.Index/proSubmit');
+Route::rule('/drug/sureBuy','api/shortage.Index/sureBuy');
+Route::rule('/drug/getMyShortage','api/shortage.Index/getMyShortage');
+Route::rule('/drug/closeShortage','api/shortage.Index/closeShortage');
 
 
 

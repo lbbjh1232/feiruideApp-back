@@ -78,7 +78,7 @@ class Index extends Api
 		//组合数据
 		foreach ($res as $key => $value) {
 			$res[$key]['sign'] = false;
-			$res[$key]['choose'] = '';
+			$res[$key]['choose'] = false;
 		}
 
 		if( empty($more) ){
@@ -302,7 +302,7 @@ class Index extends Api
 		if( $res ){
 			//发送短信给提供人
 			$content = '短缺药品：'.$params['hos_name'].'已采纳你提交的 '.$params['drugname'].' 供货信息。';
-			$this->sms($content,$params['phone']);
+			//$this->sms($content,$params['phone']);
 
 			self::returnMsg(200,'操作成功');
 
@@ -372,7 +372,7 @@ class Index extends Api
 				$p = Db::name('company')->where([ 'id' => $params['companyId'] ])->find();
 			}
 			$content = '短缺药品：'.$p['name'].' 提供了你发布的短缺药品'.' '.$params['shortName'].' '.'，快去查看吧。';
-			$this->sms($content,$params['mobile']);
+			//$this->sms($content,$params['mobile']);
 
 			self::returnMsg(200,'提交成功');
 
