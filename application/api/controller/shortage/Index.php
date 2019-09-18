@@ -196,7 +196,7 @@ class Index extends Api
 		//组合数据
 		foreach ($res as $key => $value) {
 			$res[$key]['sign'] = false;
-			$res[$key]['choose'] = '';
+			$res[$key]['choose'] = false;
 		}
 
 		if( empty($more) ){

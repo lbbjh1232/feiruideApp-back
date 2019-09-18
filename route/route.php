@@ -80,6 +80,10 @@ Route::rule('/drug/proSubmit','api/shortage.Index/proSubmit');
 Route::rule('/drug/sureBuy','api/shortage.Index/sureBuy');
 Route::rule('/drug/getMyShortage','api/shortage.Index/getMyShortage');
 Route::rule('/drug/closeShortage','api/shortage.Index/closeShortage');
+Route::rule('/drug/reEditSubmit','api/shortage.Index/reEditSubmit');
+Route::rule('/drug/getMyProvide','api/shortage.Index/getMyProvide');
+Route::rule('/drug/checkReFromPro','api/shortage.Index/checkReFromPro');
+Route::rule('/drug/modifyProvide','api/shortage.Index/modifyProvide');
 
 
 
