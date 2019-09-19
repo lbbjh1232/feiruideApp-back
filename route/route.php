@@ -84,6 +84,7 @@ Route::rule('/drug/reEditSubmit','api/shortage.Index/reEditSubmit');
 Route::rule('/drug/getMyProvide','api/shortage.Index/getMyProvide');
 Route::rule('/drug/checkReFromPro','api/shortage.Index/checkReFromPro');
 Route::rule('/drug/modifyProvide','api/shortage.Index/modifyProvide');
+Route::rule('/drug/proEditSubmit','api/shortage.Index/proEditSubmit');
 
 
 
