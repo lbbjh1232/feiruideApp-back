@@ -168,10 +168,10 @@ return [
     // | 项目设置
     // +----------------------------------------------------------------------
     // 图片域名
-    'image_url'             => 'http://ticket.toothwang.com/uploads/',
+    'image_url'             => 'http://ticket.yudzni.cn/uploads/',
 
     //票据链接
-    'ticket_url'            => 'http://ticket.toothwang.com/uploads/',
+    'ticket_url'            => 'http://ticket.yudzni.cn/uploads/',
 
     //文件存储根目录
     'save_root'             =>  'C:/phpStudy/PHPTutorial/WWW/',
