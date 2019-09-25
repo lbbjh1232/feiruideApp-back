@@ -145,6 +145,8 @@ return [
 	
     //某些方法不需要使用接口鉴权，一些公共类方法
     'allow_method'=>[
+        'api/user.user/checkversion',
+        'api/user.user/downloadapp',
         'api/user.user/login',
         'api/user.user/saveclientid',
         'api/user.user/sendsms',

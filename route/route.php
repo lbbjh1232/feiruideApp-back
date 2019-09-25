@@ -9,6 +9,11 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
+// app更新
+Route::rule('/user/checkVersion','api/user.User/checkVersion');
+Route::rule('/user/downloadApp','api/user.User/downloadApp');
+
+
 // 用户登录
 Route::rule('/user/login','api/user.User/login');
 // 短信验证码

@@ -172,6 +172,38 @@ class User extends Api
 
 	}
 
+	// 查询app最新版本
+	public function checkVersion()
+	{
+		$res = Db::name('settings')->where('from',1)->find();
+		self::returnMsg(200,'',$res);
+
+	}
+
+	// 下载app
+	public function downloadApp()
+	{
+		$filename = 'C:/phpStudy/PHPTutorial/WWW/yxt.apk';
+
+		$file = fopen($filename, 'r');
+
+		Header("Expires: 0");
+
+		Header("Pragma: public");
+
+		Header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+
+		Header("Cache-Control: public");
+
+		Header("Content-Length: ". filesize($filename));
+
+		Header("Content-Type: application/octet-stream");
+
+		Header("Content-Disposition: attachment; filename=yaoxietong.apk");
+
+		readfile($filename);
+	}
+
 	/*
 	 * 发送短信验证码
 	 */
