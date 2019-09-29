@@ -160,8 +160,8 @@ return [
         'chat/index/getchatlist',
         'chat/index/deleterecored',
         'chat/index/changeisRead',
-        'api/drug.warehouseinto/uploadticket'
-
+        'api/drug.warehouseinto/uploadticket',
+        'chat/index/pushtest'
 
     ],
 

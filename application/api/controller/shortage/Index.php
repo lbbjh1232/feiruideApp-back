@@ -7,6 +7,8 @@ use app\api\controller\Send;
 use app\api\controller\Api;
 use Zhenggg\Huyi\EasyHuyi; 
 use think\Db;
+use getui\GeTui;
+
 
 // 短缺药品相关业务操作
 class Index extends Api
@@ -304,6 +306,22 @@ class Index extends Api
 			$content = '短缺药品：'.$params['hos_name'].'已采纳你提交的 '.$params['drugname'].' 供货信息。';
 			//$this->sms($content,$params['phone']);
 
+			//发送推送
+			$result = Db::name('drug_shortage_provide')->where( $condition )->find();
+
+			$ids0 = Db::name('user')->alias('U')->leftJoin('app_device_register ADR','U.app_register_id = ADR.id and U.roleid = 6 and U.company_id = '.$result['c_or_h'])->field('ADR.client_id,ADR.version')->select();
+
+			$ids1 = Db::name('user')->alias('U')->leftJoin('app_device_register ADR','U.app_register_id = ADR.id and U.roleid = 7 and U.hospital_id = '.$result['c_or_h'])->field('ADR.client_id,ADR.version')->select();
+
+			$ids = array_merge($ids0,$ids1);
+
+			$title = "药械通 - 短缺药品";
+			$text = $params['hos_name'].'已采纳你提交的 '.$params['drugname'].' 供货信息。';
+			$getui = new GeTui();
+			foreach ($ids as $key => $value) {
+				$getui->pushMessageToSingle($value['client_id'],['title'=>$title,'content'=>$text,'payload'=>'']);
+			}
+
 			self::returnMsg(200,'操作成功');
 
 		}else{
@@ -374,6 +392,15 @@ class Index extends Api
 			$content = '短缺药品：'.$p['name'].' 提供了你发布的短缺药品'.' '.$params['shortName'].' '.'，快去查看吧。';
 			//$this->sms($content,$params['mobile']);
 
+			// 发送推送
+			$ids = Db::name('user')->alias('U')->join('app_device_register ADR','U.app_register_id = ADR.id and U.hospital_id = '.$result['hospital_id'])->field('ADR.client_id,ADR.version')->select();
+			$title = "药械通 - 短缺药品";
+			$text = $p['name'].' 提供了你发布的短缺药品 '.$params['shortName'].' '.'，快去查看吧';
+			$getui = new GeTui();
+			foreach ($ids as $key => $value) {
+				$getui->pushMessageToSingle($value['client_id'],['title'=>$title,'content'=>$text,'payload'=>'']);
+			}
+
 			self::returnMsg(200,'提交成功');
 
 		}else{
@@ -425,7 +452,21 @@ class Index extends Api
 			}
 			$mobile = implode(',', $arr);
 			//$this->sms($content,$mobile);
+			
+			// 查询医院、企业client_id 集合
+			$ids0 = Db::name('app_device_register')->field('client_id,version')->select();
+			
+			$ids1 = Db::name('user')->alias('U')->join('app_device_register ADR','U.app_register_id = ADR.id and U.hospital_id = '.$params["companyId"])->field('ADR.client_id,ADR.version')->group('ADR.client_id')->select();
 
+			// 取差集
+			$ids = array_diff_assoc2_deep($ids0,$ids1);
+			// 发送推送
+			$getui = new GeTui();
+			$title = '药械通 - 短缺药品';
+			$text = $p['name'].'发布了新的药品'.$params['drugName'].' 需求信息，快去看看吧！';
+			foreach ($ids as $key => $value) {
+				$getui->pushMessageToSingle($value['client_id'],['title'=>$title,'content'=>$text,'payload'=>''],true);
+			}
 			self::returnMsg(200,'发布成功');
 
 		}else{

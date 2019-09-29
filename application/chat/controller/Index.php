@@ -18,9 +18,8 @@ class Index extends Api
 	public function pushTest()
 	{	
 		$getui = new GeTui();
-		//$res = $getui->pushMessageToSingle('336d4ca53775277859eafb5cc8bbc80c'); //个推: 2569fe7706bfe50d58624e62379a4b40  药讯: 336d4ca53775277859eafb5cc8bbc80c
-		//$res = $getui->pushMessageToApp();
-		self::returnMsg(200,'成功',$this->getUserInfo(1));
+		$res = $getui->pushMessageToSingle('b73cb8b103210232da459095fee7fc47');
+		self::returnMsg(200,'成功',$res);
 
 	}
 
