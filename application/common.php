@@ -257,16 +257,21 @@ function isOneChinese($string){
 
 // 二维数组取差集
 function array_diff_assoc2_deep($array1, $array2) {
-    $ret = array();
-    foreach ($array1 as $k => $v) {
-        if (!isset($array2[$k])) $ret[$k] = $v;
-        else if (is_array($v) && is_array($array2[$k])) $ret[$k] = array_diff_assoc2_deep($v, $array2[$k]);
-        else if ($v !=$array2[$k]) $ret[$k] = $v;
-        else
-        {
-            unset($array1[$k]);
-        }
- 
+	$similar = [];
+    foreach($array1 as $k=>$v){
+    	if(in_array($v, $array2)){
+    		// 相同元素暂时存储
+    		$similar[] = $v;
+      		unset($array1[$k]);
+    	}
     }
-    return $ret;
+
+    foreach ($array2 as $key => $value) {
+    	if(in_array($value, $similar)){
+      		unset($array2[$key]);
+    	}
+    }
+
+    return array_merge($array1,$array2);
+     
 }

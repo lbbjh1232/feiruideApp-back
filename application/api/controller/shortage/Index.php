@@ -309,17 +309,18 @@ class Index extends Api
 			//发送推送
 			$result = Db::name('drug_shortage_provide')->where( $condition )->find();
 
-			$ids0 = Db::name('user')->alias('U')->leftJoin('app_device_register ADR','U.app_register_id = ADR.id and U.roleid = 6 and U.company_id = '.$result['c_or_h'])->field('ADR.client_id,ADR.version')->select();
+			$ids0 = Db::name('user')->alias('U')->join('app_device_register ADR','U.app_register_id = ADR.id and U.roleid = 6 and U.company_id = '.$result['c_or_h'])->field('ADR.client_id,ADR.version')->select();
 
-			$ids1 = Db::name('user')->alias('U')->leftJoin('app_device_register ADR','U.app_register_id = ADR.id and U.roleid = 7 and U.hospital_id = '.$result['c_or_h'])->field('ADR.client_id,ADR.version')->select();
+			$ids1 = Db::name('user')->alias('U')->join('app_device_register ADR','U.app_register_id = ADR.id and U.roleid = 7 and U.hospital_id = '.$result['c_or_h'])->field('ADR.client_id,ADR.version')->select();
 
 			$ids = array_merge($ids0,$ids1);
 
 			$title = "药械通 - 短缺药品";
-			$text = $params['hos_name'].'已采纳你提交的 '.$params['drugname'].' 供货信息。';
+			$text = $params['hos_name'].'已采纳你提交的'.$params['drugname'].' 供货信息。';
+
 			$getui = new GeTui();
-			foreach ($ids as $key => $value) {
-				$getui->pushMessageToSingle($value['client_id'],['title'=>$title,'content'=>$text,'payload'=>'']);
+			foreach($ids as $key => $value) {
+				$getui->pushMessageToSingle($value['client_id'],['title'=>$title,'content'=>$text,'payload'=>''],true);
 			}
 
 			self::returnMsg(200,'操作成功');
@@ -376,6 +377,7 @@ class Index extends Api
 		if( $res ){
 			//改变短缺状态
 			$result = Db::name('drug_shortage')->where([ 'id' => $params['shortId'] ])->find();
+
 			if( $result['state'] === 0 ){
 				$data1['state'] = 3;
 			}
@@ -394,8 +396,9 @@ class Index extends Api
 
 			// 发送推送
 			$ids = Db::name('user')->alias('U')->join('app_device_register ADR','U.app_register_id = ADR.id and U.hospital_id = '.$result['hospital_id'])->field('ADR.client_id,ADR.version')->select();
+
 			$title = "药械通 - 短缺药品";
-			$text = $p['name'].' 提供了你发布的短缺药品 '.$params['shortName'].' '.'，快去查看吧';
+			$text = $p['name'].'提供了你发布的短缺药品'.$params['shortName'].'，快去查看吧';
 			$getui = new GeTui();
 			foreach ($ids as $key => $value) {
 				$getui->pushMessageToSingle($value['client_id'],['title'=>$title,'content'=>$text,'payload'=>'']);
@@ -440,7 +443,7 @@ class Index extends Api
 
 			//获取经营期企业手机号码集合
 			$condition[] = ['roleid','=',6];
-			$condition[] = ['company_id','<>',$params['companyId']];
+			// $condition[] = ['company_id','<>',$params['companyId']];
 			$condition[] = ['phone','<>',''];
 			$mobile = Db::name('user')->where( $condition )->group('company_id')->order('last_login_time desc')->field('phone')->select();
 			//处理电话号码
@@ -460,10 +463,11 @@ class Index extends Api
 
 			// 取差集
 			$ids = array_diff_assoc2_deep($ids0,$ids1);
+
 			// 发送推送
 			$getui = new GeTui();
 			$title = '药械通 - 短缺药品';
-			$text = $p['name'].'发布了新的药品'.$params['drugName'].' 需求信息，快去看看吧！';
+			$text = $p['name'].'发布了新的药品需求信息，快去看看吧！';
 			foreach ($ids as $key => $value) {
 				$getui->pushMessageToSingle($value['client_id'],['title'=>$title,'content'=>$text,'payload'=>''],true);
 			}
