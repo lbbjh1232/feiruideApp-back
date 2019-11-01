@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>药械e家</title>
+		<link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_1264800_tqtjfrpby3.css">
+		<style type="text/css">
+			html{
+				height: 100%;
+				font-size: 16px; 	/* 即10px */
+				background: -webkit-linear-gradient(rgba(253,245,230,.5),rgba(253,245,230,.5));
+			}
+			@media(max-width:540px){ html { font-size:13.5px; } } /*Android常用宽度*/
+			@media(max-width:480px){ html { font-size:12px; } }		/*Android常用宽度*/
+			@media(max-width:414px){ html { font-size:10.35px; } }  /*i6Plus,i7Plus宽度*/  
+			@media(max-width:375px){ html { font-size:9.375px; } }	/*i6,i7宽度*/
+			@media(max-width:360px){ html { font-size:9px; } }	/*Android常用宽度*/
+			@media(max-width:320px){ html { font-size:8px; } }		/*i5宽度*/
+			body{
+				background-color: transparent;
+			}
+			.img-box{
+				text-align: center;
+				margin-top: 50px
+			}
+			.img-box img{
+				width: 100px;
+			}
+			.app-name{
+				font-size: 3rem;
+				padding-top: 10px;
+				text-align: center;
+				letter-spacing: 1px;
+				font-weight: bold;
+			}
+			.version{
+				font-size: 1.8rem;
+				color: gray;
+				text-align: center;
+			}
+			.android{
+				width: 56%;
+				margin: 40px auto 20px;
+				padding: 0 25px;
+				background-color: #78BC43;
+				display: flex;
+				display: -webkit-flex;
+				border-radius: 5px;
+				flex-direction: row;
+				justify-content: space-around;
+			}
+			.icon-ai-app:before,.icon-iconfontapple{
+				color: white;
+				font-size: 3.5rem;
+			}
+
+			.app-info{
+				font-size: 1.8rem;
+				color: white;
+				display: flex;
+				display: -webkit-flex;
+			}
+			.app-info span{
+				align-self: center;
+			}
+			.iphone{
+				background:#2B91E5;margin-top:10px;
+			}
+			.anzhuo:active{
+				background: rgba(120,188,67,.5);
+			}
+			.iphone:active{
+				background: rgba(43,145,229,.5);
+			}
+			.guide{
+
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0,0,0,.7);
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 200;
+				display: flex;
+				display: -webkit-flex;
+				/*flex-direction: column;*/
+
+			}
+			.guide-info{
+				margin: 50px auto;
+				font-size: 2rem;
+				color: white;
+				/*align-self: center;*/
+			}
+			.arrow{
+				position: absolute;
+				top: 0;
+				right: 20px;
+			}
+			.icon-tuya_huabanfuben:before{
+				color: white;
+				font-size: 40px;
+			}
+			.close-info{
+				text-align: center;
+				margin-top: 30px;
+			}
+			.icon-shanchu1:before{
+				font-size: 25px;
+			}
+
+		</style>
+	</head>
+ 
+ 	<body>
+ 		
+ 		<div class="img-box">
+ 			<img src="__STATIC__/img/logo.png">
+
+ 			<div class="app-name">药械e家</div>
+ 			<div class="version">版本号: {$version}</div>
+ 		</div>
+
+			
+ 		<div class="android anzhuo" >
+ 			<div class="iconfont icon-ai-app"></div>
+ 			<div class="app-info"><span>Android版下载</span></div>
+ 		</div>
+
+ 		<div class="android iphone" style="">
+ 			<div class="iconfont icon-iconfontapple"></div>
+ 			<div class="app-info"><span>IPhone版下载</span></div>
+ 		</div>
+
+ 		<!-- 下载引导窗 -->
+ 		<div class="guide" style="display: none;">
+ 			
+ 			<div class="guide-info">
+ 				<div class="info">点击右上角 ... 在浏览器中打开</div>
+ 				<div class="close-info iconfont icon-shanchu1"></div>
+
+ 			</div>
+
+
+ 			<div class="arrow iconfont icon-tuya_huabanfuben"></div>
+
+ 		</div>
+
+
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+		<script type="text/javascript">
+			//判断是否是微信浏览器
+			var browser = {
+			    versions: function () {
+			        var u = navigator.userAgent, app = navigator.appVersion;
+			        return {         //移动终端浏览器版本信息
+			            trident: u.indexOf('Trident') > -1, //IE内核
+			            presto: u.indexOf('Presto') > -1, //opera内核
+			            webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+			            gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+			            mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+			            ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+			            android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
+			            iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+			            iPad: u.indexOf('iPad') > -1, //是否iPad
+			            webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+			        };
+			    }(),
+			    language: (navigator.browserLanguage || navigator.language).toLowerCase()
+			}
+			var isWeChat = false;
+			var isIos = browser.versions.ios;
+
+			if(browser.versions.mobile){
+		        var ua = navigator.userAgent.toLowerCase();
+		        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+
+		                //在微信中打开
+		                isweChat = true;
+		        }
+			}
+
+
+
+			$(document).ready(function(){
+				// 下载安卓版
+				$('.anzhuo').click(function(){
+
+					if(isIos){
+						alert('你的手机是IOS系统，请下载IOS版');
+						return;
+					}
+
+					if(isWeChat){
+						$('.guide').css('display','-webkit-flex');
+
+						// 监听关闭
+						$('.close-info').on('click',function(){
+							$('.guide').css('display','none');
+						})
+						
+						
+					}else{
+						
+						window.location.href = window.location.origin +'/index.php/user/downloadApp';
+					}
+
+
+				});
+
+
+				//IOS下载
+				$('.iphone').click(function(){
+					alert('暂未发布');
+				});
+
+
+
+			})
+
+		</script>
+
+ 	</body>
+</html>

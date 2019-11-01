@@ -204,6 +204,7 @@ class User extends Api
 		readfile($filename);
 	}
 
+
 	/*
 	 * 发送短信验证码
 	 */

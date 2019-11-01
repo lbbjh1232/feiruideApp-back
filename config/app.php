@@ -178,11 +178,8 @@ return [
     //文件存储根目录
     'save_root'             =>  'C:/phpStudy/PHPTutorial/WWW/',
 
-
     //登录接口地址
     'mp_login'              => 'https://test.yp.feiruide.cn/mplogin/',
-
-
 
 
 ];

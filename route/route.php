@@ -12,7 +12,7 @@
 // app更新
 Route::rule('/user/checkVersion','api/user.User/checkVersion');
 Route::rule('/user/downloadApp','api/user.User/downloadApp');
-
+Route::rule('/user/shareApp','api/user.Other/shareApp');
 
 // 用户登录
 Route::rule('/user/login','api/user.User/login');
